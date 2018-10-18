@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,viewport-fit=cover">
+	<title>Document</title>
+	<style>
+	    *,*::before,*::after {
+	    	margin: 0;
+	    	padding: 0;
+	    	box-sizing: border-box;
+	    }
+	    html,body {
+	    	height: 100%;
+	    }
+		.container {
+			width: 100%;
+			height:100%;
+			background: url(images/bg.jpg) no-repeat;
+			background-size: 100% 100%;
+			border-top: 1px solid transparent;
+			font-size:0;
+            margin-top: -1px;
+		}
+        .header {
+        	width: 82.6%;
+        	margin-left: 7%;
+        	margin-top: 30px;
+        }
+        .header img {
+        	width: 100%;
+        	height: 100%;
+        }
+        #lottery{
+            width: 69%;
+            height:auto;
+            font-size: 0;
+            margin: 14px 15%;
+            overflow: hidden;
+        }
+        .item {
+        	width: 30%;
+        	padding-bottom: 27.2%;
+        	background: #fff;
+        	margin-right: 4%;
+        	margin-bottom: 4%;
+        	float: left;
+        	border-radius: 8px;
+        	position: relative;
+        	overflow:hidden;
+        }
+        .item:nth-child(3n){
+        	margin-right: 0;
+        }
+        .item:nth-last-child(-n+3){
+        	margin-bottom: 0;
+        }
+        .item img,.item a  {
+        	width: 100%;
+        	position: absolute;
+        	top: 50%;
+        	left: 0;
+        	-webkit-transform: translateY(-50%);
+        	padding-left: 2px;
+        	padding-right: 2px;
+        }
+        .item.unit2 img,.item.unit3 img,.item.unit5 img,.item.unit7 img {
+        	padding: 17px 17px 12px 14px;
+        }
+        .item .active {
+        	background: rgba(0,0,0,0);
+        }
+        .item.unit2::before,.item.unit3::before,.item.unit5::before,.item.unit7::before {
+        	content:'';
+        	width: 32px;
+        	height: 22px;
+        	display: block;
+        	position:absolute;
+        	right: 6px;
+        	top: 4px;
+        	background:url(images/icon.png) no-repeat;
+        	background-size: 136px 22px;
+        	background-position: 0 0;
+        	z-index: 1;
+        }
+        .item.unit3::before {
+        	background-position: -36px 0;
+        }
+        .item.unit5::before {
+        	background-position: -71px 0;
+        }
+        .item.unit7::before {
+        	background-position: -105px 0;
+        }
+        .item.unit9 {
+        	font-size: 14px;
+        	text-align: center;
+        	background: url(images/center.png) no-repeat;
+        	background-size: 100% 100%;
+        }
+        .unit9 a {
+            text-decoration:none;
+            color:#f61212;
+            font-weight: 600;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .info {
+        	width: 100%;
+        	position: relative;
+        }
+        .info img {
+        	width: 100%;
+        	height: 100%;
+        }
+        .content {
+        	width: 77%;
+        	margin-left:11%;
+        	position: absolute;
+        	top: 27%;
+        	left: 0;
+        	font-size: 12px;
+        	color: #385904;
+        	font-weight: 600;
+            -webkit-text-stroke: 0.1px #fff;
+        }
+        .content p {
+        	text-indent: 1em;
+        	letter-spacing: 1px;
+        }
+        .wrapper-again .btn,.wrapper-choose .btn {
+        	width: 70px;
+        	height: 30px;
+        	position: relative;
+        	left: 50%;
+        	transform: translateX(-50%);
+        	top:33px;
+        	text-align: center;
+        	line-height: 30px;
+        	color:#fff;
+        	background:-webkit-linear-gradient(top,#1af5b6,#4ca569);
+            font-size: 12px;
+            border-radius: 14px;
+        }
+        .wrapper-again .btn{
+            top: 80px;
+        }
+        .wrapper-choose,.wrapper-again {
+        	width: 100%;
+        	height: 100%;
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	z-index: 99;
+        	background: rgba(0,0,0,.7);
+            overflow: hidden;
+        	display: none;
+        }
+        .choose-info,.again{
+            width: 100%;
+            max-width: 375px;
+            height: 384px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            background: url(images/chose.png) no-repeat;
+            background-size: contain;
+            text-align: center;
+            padding-top: 118px;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .again {
+            width: 136px;
+            height: 181px;
+            background: url(images/unit-again.png) no-repeat;
+            background-size: contain;
+            top: 40%;
+        }
+        .choose-info img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        .choose-info .message {
+            line-height: 22px;
+        }
+        .show {
+        	display: block;
+        }
+        .active{
+        	background: rgba(127,255,170,0.8);
+        	
+        }
+        @media screen and (max-width:320px) {
+            .content{
+                font-size: 10px;
+            }
+        }
+        @media screen and (width:768px){
+            .content {
+                font-size: 20px;
+                line-height: 30px;
+            }
+            .item.unit9 {
+                font-size: 22px;
+            }
+        }
+        
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+		   <img src="images/header.png" alt="">
+	    </div>
+		<div id="lottery">
+			<div class="item unit1">
+				<img src="images/double.png" alt="喜从天降，喜得双倍经验卡<br/>
+请稍后前往我的特权卡查看使用">
+			</div>
+			<div class="item unit2">
+				<img src="images/diamond.png" alt="福气满满，28个钻石已入袋<br/>
+请稍后前往我的钻石查看使用
+">
+			</div>
+			<div class="item unit3">
+				<img src="images/diamond.png" alt="福气满满，128个钻石已入袋<br/>
+请稍后前往我的钻石查看使用">
+			</div>
+			<div class="item unit8">
+				<img src="images/again.jpg" alt="">
+			</div>
+			<div class="item unit9">
+				<a href="javascript:;">立即抽奖</a>
+			</div>
+			<div class="item unit4">
+				<img src="images/charge.png" alt="福气临门，喜得充值返钻卡
+<br/>请稍后前往我的特权卡查看使用">
+			</div>
+			<div class="item unit7">
+				<img src="images/diamond.png" alt="福气满满，58个钻石已入袋<br/>
+请稍后前往我的钻石查看使用">
+			</div>
+			<div class="item unit6">
+				<img src="images/dog.png" alt="运气逆天，喜得啸天座驾<br/>
+请稍后前往我的座驾查看使用">
+			</div>
+			<div class="item unit5">
+				<img src="images/diamond.png" alt="福气满满，198个钻石已入袋<br/>
+请稍后前往我的钻石查看使用">
+			</div>
+		</div>
+		<div class="info">
+            <img src="images/info.jpg" alt="">
+			<div class="content">
+				<p>3月19号起到3月25号，每天登陆花间都可以进行抽奖活动，奖品如下：</p>
+				<p>升级必备：双倍经验卡（日）</p>
+				<p>充值必备：返钻卡5%（日）</p>
+				<p>装逼神器：啸天座驾（日）</p>
+				<p>福利满满：钻石</p>
+				<p>每日账号充值金额达到98元，可再次获得抽奖机会；抽中座驾、经验卡，返钻石的时间可累加；使用返钻卡充值苹果内购无效。</p>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper-again">
+        <div class="again">
+            <div class="btn">确认</div>
+        </div>
+	</div>
+	<div class="wrapper-choose">
+        <div class="choose-info">
+            <img src="images/diamond.png">
+            <p class="message"></p>
+            <div class="btn">确认</div>
+        </div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+	<script>
+		$(function(){
+
+            Mock.mock('http://list.com?userId=123','get',{
+                "err":0,
+                "num|0-8":0
+            })
+
+
+            //获取抽奖次数
+            var total =4;
+            $('.unit9 a').html("抽奖次数<br/>x"+total);
+            if(total==0){
+                
+            }
+
+            //定义抽奖对象
+			var lottery = {
+				index: -1,    //当前转动到哪个位置，起点位置
+				count: 0,     //总共有多少个位置
+				timer: 0,     //setTimeout的ID，用clearTimeout清除
+				speed: 20,    //初始转动速度
+				times: 0,     //转动次数
+				cycle: 50,    //转动基本次数：即至少需要转动多少次再进入抽奖环节
+				prize: -1,    //中奖位置
+				init: function(id) {
+					if ($('#' + id).find('.item').length > 0) {
+						$lottery = $('#' + id);
+						$units = $lottery.find('.item');
+						this.obj = $lottery;
+						this.count = $units.length;
+						$lottery.find('.item.unit' + this.index).addClass('active');
+					};
+				},
+				roll: function() {
+					var index = this.index;
+					var count = this.count;
+					var lottery = this.obj;
+					$(lottery).find('.item.unit' + index).removeClass('active');
+					index += 1;
+					if (index > count - 1) {
+						index = 0;
+					};
+					$(lottery).find('.item.unit' + index).addClass('active');
+					this.index = index;
+					return false;
+				},
+				stop: function(index) {
+					this.prize = index;
+					
+				}
+			};
+
+			function roll() {
+				lottery.times += 1;
+				lottery.roll(); //转动过程调用的是lottery的roll方法，这里是第一次调用初始化
+				if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
+					clearTimeout(lottery.timer);
+					//$(lottery).find('.item.unit' + index).removeClass('active');
+					// 抽奖完成后，对获得奖品进行判断
+
+                    //再接再厉
+					if(lottery.prize==8){ 
+                       $('.wrapper-again').addClass('show');
+					}else{
+                        var src=$('.item.unit' + lottery.prize).find('img').attr('src');
+                        var info =$('.item.unit' + lottery.prize).find('img').attr('alt');
+                        console.log(info);
+                        $('.wrapper-choose').find('img').attr('src',src);
+                        $('.wrapper-choose').find('.message').html(info);
+                        $('.wrapper-choose').addClass('show');
+					}
+                     //恢复初始值
+                    lottery.prize = -1;
+                    lottery.times = 0;
+                    click = false;
+				
+				} else {
+					if (lottery.times < lottery.cycle) {
+						lottery.speed -= 10;
+					} else if (lottery.times == lottery.cycle) {
+						lottery.prize = prizeIndex;//随机给中奖位置
+					} else {
+						if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+							lottery.speed += 110;
+						} else {
+							lottery.speed += 20;
+						}
+					}
+					if (lottery.speed < 40) {
+						lottery.speed = 40;
+					};
+					lottery.timer = setTimeout(roll, lottery.speed); //循环调用
+
+				}
+				return false;
+			}
+            var prizeIndex = -1;
+			var click = false;
+            lottery.init('lottery');
+            $('.unit9 a').click(function() {
+					if (click) { //click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应
+						return false;
+					} else {
+                        if(total>0){
+                            total--;
+                            lottery.speed = 100;
+                            $.ajax({
+                            url:'http://list.com?userId=123',
+                            type:'get',
+                            dataType:'json',
+                            success:function(data){
+                                if(data.err==0){
+                                     prizeIndex = data.num;
+                                }
+                            }
+                        })
+                            roll(); //转圈过程不响应click事件，会将click置为false
+                            click = true; //一次抽奖完成后，设置click为true，可继续抽奖
+                            $('.unit9 a').html("抽奖次数<br/>x"+total);
+                            return false;
+                        }else{
+                            alert('抽奖机会已用完')
+                        }
+					}	
+				});
+            $('.btn').click(function(){
+                $(this).parent().removeClass('show').parent().removeClass('show');
+            })
+           
+		})
+		
+	</script>
+</body>
+</html>
